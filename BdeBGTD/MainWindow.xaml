@@ -5,9 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BdeBGTD"
         mc:Ignorable="d"
-        Title="BdeB GTD" Height="720" Width="1280"
+        Title="BdeB GTD" Height="720" Width="1280" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
-    <Grid>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Fichier" />
+            <MenuItem Header="_Boite d'entrée" />
+            <MenuItem Header="_Aide" />
 
-    </Grid>
+
+
+        </Menu>
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="427"/>
+                <ColumnDefinition Width="427"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
+                <Button Content="+" Click="PlusButton_Click" Width="13" Height="16"  Padding="0,0,0,0" />
+                <TextBlock x:Name="date" />
+            </StackPanel>
+            <TextBlock Text="Getting Things Done ©" Grid.Column="0" Grid.Row="0"/>
+            <TextBlock Text="Boîte d'entrées" Grid.Column="0" Grid.Row="1"/>
+            <TextBlock Text="Prochaines actions" Grid.Column="1" Grid.Row="1"/>
+            <TextBlock Text="Système de suivi" Grid.Column="2" Grid.Row="1"/>
+
+        </Grid>
+    </DockPanel>
+
 </Window>
