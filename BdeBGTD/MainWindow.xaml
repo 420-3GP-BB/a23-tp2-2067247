@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="BdeB GTD" Height="720" Width="1280" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="bordureListe">
+            <Setter Property="Border.BorderBrush" Value="Black"/>
+            <Setter Property="Border.BorderThickness" Value="2"/>
+            <Setter Property="Border.Margin" Value="15,15,15,15"/>
+        </Style>
+    </Window.Resources>
+    
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Fichier" />
@@ -24,18 +32,32 @@
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
                 <Button Content="+" Click="PlusButton_Click" Width="13" Height="16"  Padding="0,0,0,0" />
                 <TextBlock x:Name="date" />
             </StackPanel>
+
+            
             <TextBlock Text="Getting Things Done ©" Grid.Column="0" Grid.Row="0"/>
             <TextBlock Text="Boîte d'entrées" Grid.Column="0" Grid.Row="1"/>
             <TextBlock Text="Prochaines actions" Grid.Column="1" Grid.Row="1"/>
             <TextBlock Text="Système de suivi" Grid.Column="2" Grid.Row="1"/>
+
+            <Border Grid.Column="0" Grid.Row="2" Style="{StaticResource bordureListe}">
+                
+            </Border>
+
+            <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource bordureListe}">
+
+            </Border>
+
+            <Border Grid.Column="2" Grid.Row="2" Style="{StaticResource bordureListe}">
+
+            </Border>
 
         </Grid>
     </DockPanel>
