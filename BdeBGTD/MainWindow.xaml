@@ -13,10 +13,27 @@
             <Setter Property="Border.BorderThickness" Value="2"/>
             <Setter Property="Border.Margin" Value="15,15,15,15"/>
         </Style>
+
+        <Style x:Key="TitreCase">
+            <Setter Property="TextBlock.FontSize" Value="25"/>
+            <Setter Property="TextBlock.FontWeight" Value="Bold"/>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="NomLogiciel">
+            <Setter Property="TextBlock.FontSize" Value="35"/>
+            <Setter Property="TextBlock.FontWeight" Value="Bold"/>
+            <Setter Property="TextBlock.VerticalAlignment" Value="center" />
+        </Style>
+
+        <Style x:Key="menu">
+            <Setter Property="TextBlock.FontSize" Value="15"/>
+        </Style>
+
     </Window.Resources>
     
     <DockPanel>
-        <Menu DockPanel.Dock="Top">
+        <Menu DockPanel.Dock="Top" Style="{StaticResource menu}" >
             <MenuItem Header="_Fichier" />
             <MenuItem Header="_Boite d'entrée" />
             <MenuItem Header="_Aide" />
@@ -36,16 +53,16 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock x:Name="date" Margin="0,0,10,0" Text="2023-10-31" Height="18"/>
+            <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,5,5,5">
+                <TextBlock x:Name="date" Margin="0,0,10,0" FontSize="18" Text="2023-10-31" Height="26"/>
                 <Button Content="+" Click="PlusButton_Click" Width="19" Height="22" />
             </StackPanel>
 
-            
-            <TextBlock Text="Getting Things Done ©" Grid.Column="0" Grid.Row="0"/>
-            <TextBlock Text="Boîte d'entrées" Grid.Column="0" Grid.Row="1"/>
-            <TextBlock Text="Prochaines actions" Grid.Column="1" Grid.Row="1"/>
-            <TextBlock Text="Système de suivi" Grid.Column="2" Grid.Row="1"/>
+
+            <TextBlock Style="{StaticResource NomLogiciel}" Text="Getting Things Done ©" Grid.Column="0" Grid.Row="0"/>
+            <TextBlock Text="Boîte d'entrées" Grid.Column="0" Grid.Row="1" Style="{StaticResource TitreCase}"/>
+            <TextBlock Text="Prochaines actions" Grid.Column="1" Grid.Row="1" Style="{StaticResource TitreCase}" />
+            <TextBlock Text="Système de suivi" Grid.Column="2" Grid.Row="1" Style="{StaticResource TitreCase}" />
 
             <Border Grid.Column="0" Grid.Row="2" Style="{StaticResource bordureListe}">
                 
