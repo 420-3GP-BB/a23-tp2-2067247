@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BdeBGTD
 {
@@ -26,22 +27,30 @@ namespace BdeBGTD
         InitializeComponent();
 
             // date.Text = DateTime.Now.ToShortDateString();
-            date.Text = dateAffichee.ToShortDateString();
-            InitializeComponent();
+           
            dateAffichee = DateTime.Now;
+           date.Text = dateAffichee.ToShortDateString();
             ChangerDate(dateAffichee);
         }
 
         private void PlusButton_Click(object sender, RoutedEventArgs e)
         {
-        //Ajoute 2 jours a la date affichée
-            dateAffichee = dateAffichee.AddDays(2);
+        //Ajoute 1 jour a la date affichée
+            dateAffichee = dateAffichee.AddDays(1);
             ChangerDate(dateAffichee);
         }
-        //met à jour la date àpres l'ajout de 2 jours
+        //met à jour la date àpres l'ajout de 1 jour
         private void ChangerDate(DateTime nouvelleDate)
         {
             date.Text = nouvelleDate.ToShortDateString();
         }
+        private void ClickAPropos(object sender, RoutedEventArgs e)
+        {
+            //Ouvre la fenetre a propos
+            WindowAPropos fenetreApropos = new WindowAPropos();
+            fenetreApropos.Show();
+           
+        }
+
     }
 }

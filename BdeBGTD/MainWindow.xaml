@@ -36,7 +36,9 @@
         <Menu DockPanel.Dock="Top" Style="{StaticResource menu}" >
             <MenuItem Header="_Fichier" />
             <MenuItem Header="_Boite d'entrée" />
-            <MenuItem Header="_Aide" />
+            <MenuItem Header="_Aide" >
+                <MenuItem Click="ClickAPropos" Header="À propos..." />
+            </MenuItem>
 
 
 
