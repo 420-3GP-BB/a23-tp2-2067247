@@ -8,26 +8,28 @@ namespace GTD
 
         public ElementGTD(XmlElement elementXml) 
         { 
-        
+        DeXML(elementXml);
         }
+        // nom de la tache, c'est un attribut obligatoire
         public String Nom
         {
             private set;
             get;
         }
-
+        // statut de la tache, c'est un attribut obligatoire
         public String Statut
         {
             private set;
             get;
         }
-
+        // description de la tache
         public String Description
         {
             private set;
             get;
         }
-        public DateTime DateRappel
+        // date de rappel de la tache pour les taches incubées ou suivies
+        public String DateRappel
         {
             private set;
             get;
@@ -42,8 +44,15 @@ namespace GTD
         {
             Nom = elem.GetAttribute("nom");
             Statut = elem.GetAttribute("statut");
-            XmlElement description = elem["element_gtd"];
-            Description = description.InnerText.Trim();
+        // etant donnée que la description n'est pas obligatoire on verifie si elle est presente avant de la charger
+            if (elem.HasChildNodes)
+            {
+                Description = elem.FirstChild.InnerText.Trim();
+            }
+            else
+            {
+                Description = string.Empty;
+            }
         }
 
         /// <summary>
@@ -56,11 +65,21 @@ namespace GTD
             XmlElement element_gtd = doc.CreateElement("element_gtd");
             element_gtd.SetAttribute("nom", Nom);
             element_gtd.SetAttribute("statut", Statut);
-            element_gtd.SetAttribute("dateRappel", DateRappel.ToShortDateString());
+            
+     //on ajoute la date seulement si elle est présente
+            if (DateRappel != null) 
+            {
+                element_gtd.SetAttribute("dateRappel", DateRappel);
+            }
 
-            XmlElement elementDescription = doc.CreateElement("description");
-            elementDescription.InnerText = Description;
-            element_gtd.AppendChild(elementDescription);
+
+            if (!string.IsNullOrEmpty(Description))
+            {
+     // On ajoute la description seuelemt si elle n'est pas vide
+                XmlElement elementDescription = doc.CreateElement("description");
+                elementDescription.InnerText = Description;
+                element_gtd.AppendChild(elementDescription);
+            }
 
             return element_gtd;
         }
