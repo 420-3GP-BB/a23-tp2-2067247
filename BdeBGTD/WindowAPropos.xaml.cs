@@ -25,9 +25,22 @@ namespace BdeBGTD
             InitializeComponent();
              
         }
-        void fermerAide(object sender, RoutedEventArgs e)
+     
+
+        public static RoutedCommand AProposCmd = new RoutedCommand();
+
+        private void APropos_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void APropos_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             this.Close();
         }
+       /* void fermerAide(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }*/
     }
 }

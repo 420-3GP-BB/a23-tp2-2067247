@@ -6,15 +6,21 @@
         xmlns:local="clr-namespace:BdeBGTD"
         mc:Ignorable="d"
         Title="À propos..." Height="175" Width="175" ResizeMode="NoResize" >
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:WindowAPropos.AProposCmd}"
+                        Executed="APropos_Executed"
+                        CanExecute="APropos_CanExecute"
+                        />
+    </Window.CommandBindings>
     <Border BorderBrush="Black" BorderThickness="1">
     <Grid >
         <StackPanel Margin="8">
             <TextBlock Margin="2,12,3,5" Text="BdeB GTD"/>
             <TextBlock Margin="2,1,3,3" Text="Version 1.0"/>
             <TextBlock Margin="2,1,3,3" Text="Auteur: Malak Fora "/>
-            <Button Margin="2,12,3,5" Width="45" Height="20" Content="OK" Click="fermerAide"/>
+                <Button Margin="2,12,3,5" Width="45" Height="20" Content="OK" Command="{x:Static local:WindowAPropos.AProposCmd}"/>
         </StackPanel>
-        
+            
     </Grid>
     </Border>
 </Window>
