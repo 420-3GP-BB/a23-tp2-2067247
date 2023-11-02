@@ -25,8 +25,8 @@ namespace BdeBGTD
             InitializeComponent();
              
         }
-     
 
+// routed commande pour pouvoir fermer la fenetre 
         public static RoutedCommand AProposCmd = new RoutedCommand();
 
         private void APropos_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -38,9 +38,6 @@ namespace BdeBGTD
         {
             this.Close();
         }
-       /* void fermerAide(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }*/
+       
     }
 }
