@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using ClassesAffaire;
+using GTD;
 
 namespace GTD
 {
@@ -14,5 +16,6 @@ namespace GTD
             ListeActions = new ObservableCollection<ElementGTD>();
             ListeSuivis = new ObservableCollection<ElementGTD>();
         }
+
     }
 }

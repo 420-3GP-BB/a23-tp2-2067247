@@ -48,9 +48,40 @@ namespace BdeBGTD
         {
             //Ouvre la fenetre a propos
             WindowAPropos fenetreApropos = new WindowAPropos();
-            fenetreApropos.Show();
+            fenetreApropos.ShowDialog();
            
         }
 
+        // routed commande pour pouvoir fermer la fenetre principale
+        public static RoutedCommand QuitterCmd = new RoutedCommand();
+
+        private void Quitter_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void Quitter_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void Quitter_Click(object sender, RoutedEventArgs e)
+        {
+//sauvegarder a definir plus tard 
+
+        }
+// ouvrir la fenetre d'ajout 
+private void ouvrirFenetreAjout()
+        {
+            WindowAjout windowAjout = new WindowAjout();
+            windowAjout.Owner = this;
+            windowAjout.ShowDialog();
+
+        }
+
+        private void Ajout_Click(object sender, RoutedEventArgs e)
+        {
+            ouvrirFenetreAjout();
+
+        }
     }
 }

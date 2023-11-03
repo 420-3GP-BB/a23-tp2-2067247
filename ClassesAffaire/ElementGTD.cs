@@ -10,6 +10,13 @@ namespace GTD
         { 
         DeXML(elementXml);
         }
+
+        public ElementGTD(string nomTache, string descriptionTache, string statutTache)
+        {
+           Nom = nomTache;
+           Description = descriptionTache;
+           Statut = statutTache;
+        }
         // nom de la tache, c'est un attribut obligatoire
         public String Nom
         {
