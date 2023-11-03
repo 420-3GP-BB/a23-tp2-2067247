@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ClassesAffaire;
+using GTD;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+
+
 
 namespace BdeBGTD
 {
@@ -22,15 +27,23 @@ namespace BdeBGTD
     public partial class MainWindow : Window
     {
         private DateTime dateAffichee;
+        private static GestionnaireGTD gestionnaire = new GestionnaireGTD();
+        public static ObservableCollection<ElementGTD> ListeEntrees = gestionnaire.ListeEntrees;
+        public static ObservableCollection<ElementGTD> ListeActions = gestionnaire.ListeActions;
+        public static ObservableCollection<ElementGTD> ListeSuivis = gestionnaire.ListeSuivis;
+        public static ObservableCollection<ElementGTD> ListeArchive = gestionnaire.ListeArchive;
         public MainWindow()
         {
         InitializeComponent();
 
-            // date.Text = DateTime.Now.ToShortDateString();
+            
            
            dateAffichee = DateTime.Now;
            date.Text = dateAffichee.ToShortDateString();
-            ChangerDate(dateAffichee);
+           
+
+
+
         }
 
         private void PlusButton_Click(object sender, RoutedEventArgs e)
@@ -82,6 +95,11 @@ private void ouvrirFenetreAjout()
         {
             ouvrirFenetreAjout();
 
+        }
+
+        public static void UpdateListCount()
+        {
+            affichageListe.Text = ListeEntrees.Count.ToString();
         }
     }
 }

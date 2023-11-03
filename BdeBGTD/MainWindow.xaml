@@ -77,7 +77,7 @@
             <TextBlock Text="Système de suivi" Grid.Column="2" Grid.Row="1" Style="{StaticResource TitreCase}" />
 
             <Border Grid.Column="0" Grid.Row="2" Style="{StaticResource bordureListe}">
-                
+                <TextBlock x:Name="affichageListe" Text=""/>
             </Border>
 
             <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource bordureListe}">

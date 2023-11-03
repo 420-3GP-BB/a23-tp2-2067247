@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ClassesAffaire;
 using GTD;
+using BdeBGTD;
 using System.Collections.ObjectModel;
 
 namespace BdeBGTD 
@@ -26,6 +27,7 @@ namespace BdeBGTD
         public WindowAjout()
         {
             InitializeComponent();
+            
         }
         // routed commande pour pouvoir fermer la fenetre 
         public static RoutedCommand ConfirmerCmd = new RoutedCommand();
@@ -37,10 +39,11 @@ namespace BdeBGTD
             e.CanExecute = true;
             }else { e.CanExecute = false; }
         }
-
+       
         private void Confirmer_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             ElementGTD nouvelleentree = new ElementGTD(nomAjout.Text,descriptionAjout.Text,"Entree");
+            MainWindow.ListeEntrees.Add(nouvelleentree);
             
         }
         // routed commande pour pouvoir fermer la fenetre 

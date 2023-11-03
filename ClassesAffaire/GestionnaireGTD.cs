@@ -9,12 +9,14 @@ namespace GTD
         public ObservableCollection<ElementGTD> ListeEntrees { get; private set; }
         public ObservableCollection<ElementGTD> ListeActions { get; private set; }
         public ObservableCollection<ElementGTD> ListeSuivis { get; private set; }
+        public ObservableCollection<ElementGTD> ListeArchive { get; private set; }
 
         public GestionnaireGTD()
         {
             ListeEntrees = new ObservableCollection<ElementGTD>();
             ListeActions = new ObservableCollection<ElementGTD>();
             ListeSuivis = new ObservableCollection<ElementGTD>();
+            ListeArchive = new ObservableCollection<ElementGTD>();
         }
 
     }
