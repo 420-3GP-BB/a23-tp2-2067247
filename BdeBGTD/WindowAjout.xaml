@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BdeBGTD"
         mc:Ignorable="d"
-        Title="WindowAjout" Height="300" Width="400"
+        Title="WindowAjout"  Height="325" Width="400"
         WindowStartupLocation="CenterOwner">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:WindowAjout.ConfirmerCmd}"
@@ -31,7 +31,7 @@
                     <Button Width="100" Height="20" Margin="5,5,15,5" Content="Confirmer" Command="{x:Static local:WindowAjout.ConfirmerCmd}"/>
                     <Button Width="100" Height="20" Margin="5,5,5,5" Content="Annuler" Command="{x:Static local:WindowAjout.AnnulerCmd}" />
                 </StackPanel>
-               
+                <CheckBox VerticalAlignment="Bottom" x:Name="checkAjout" IsChecked="False" Checked="checkAjout_Checked" Unchecked="checkAjout_Unchecked" Margin="5,5,5,5" Content="Garder cette fenêtre ouverte " />
             </StackPanel>
     </Grid>
     </Border>

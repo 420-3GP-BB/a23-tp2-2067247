@@ -28,10 +28,24 @@ namespace BdeBGTD
     {
         private DateTime dateAffichee;
         private static GestionnaireGTD gestionnaire = new GestionnaireGTD();
-        public static ObservableCollection<ElementGTD> ListeEntrees = gestionnaire.ListeEntrees;
-        public static ObservableCollection<ElementGTD> ListeActions = gestionnaire.ListeActions;
-        public static ObservableCollection<ElementGTD> ListeSuivis = gestionnaire.ListeSuivis;
-        public static ObservableCollection<ElementGTD> ListeArchive = gestionnaire.ListeArchive;
+// fait en sorte que  les Listes pointent sur les mêmes listes déclarées dans getsionnaireGTD
+        public ObservableCollection<ElementGTD> ListeEntrees
+        {
+            get { return gestionnaire.ListeEntrees; }
+        }
+        public ObservableCollection<ElementGTD> ListeSuivis
+        {
+            get { return gestionnaire.ListeSuivis; }
+        }
+        public ObservableCollection<ElementGTD> ListeActions
+        {
+            get { return gestionnaire.ListeActions; }
+        }
+        public ObservableCollection<ElementGTD> ListeArchive
+        {
+            get { return gestionnaire.ListeArchive; }
+        }
+
         public MainWindow()
         {
         InitializeComponent();
@@ -40,7 +54,7 @@ namespace BdeBGTD
            
            dateAffichee = DateTime.Now;
            date.Text = dateAffichee.ToShortDateString();
-           
+            DataContext = gestionnaire;
 
 
 
@@ -97,9 +111,29 @@ private void ouvrirFenetreAjout()
 
         }
 
-        public static void UpdateListCount()
+        public static RoutedCommand TraiterCmd = new RoutedCommand();
+
+        private void Traiter_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            affichageListe.Text = ListeEntrees.Count.ToString();
+            if (ListeEntrees.Count()>0)
+            {
+                e.CanExecute = true;
+            }else
+            { e.CanExecute = false; }
         }
+
+        private void Traiter_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            ouvrirFenetreTraiter();
+        }
+        private void ouvrirFenetreTraiter()
+        {// on entre la première entrée de la liste en paramètre de la nouvelle fenêtre <traiter entrée>
+            WindowTraiter windowTraiter = new WindowTraiter(ListeEntrees.FirstOrDefault());
+            windowTraiter.Owner = this;
+            windowTraiter.ShowDialog();
+
+        }
+
+
     }
 }

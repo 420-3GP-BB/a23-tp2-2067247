@@ -29,6 +29,9 @@ namespace BdeBGTD
             InitializeComponent();
             
         }
+       private Boolean checkee= false;
+        //déclaration d'un gestionnaire patagé entre les fenêtres obtenu grâce à chat gpt
+        GestionnaireGTD sharedGestionnaire = (GestionnaireGTD)Application.Current.MainWindow.DataContext;
         // routed commande pour pouvoir fermer la fenetre 
         public static RoutedCommand ConfirmerCmd = new RoutedCommand();
 
@@ -39,12 +42,17 @@ namespace BdeBGTD
             e.CanExecute = true;
             }else { e.CanExecute = false; }
         }
-       
+//commande qui s'execure quand on appuie sur confirmer
         private void Confirmer_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             ElementGTD nouvelleentree = new ElementGTD(nomAjout.Text,descriptionAjout.Text,"Entree");
-            MainWindow.ListeEntrees.Add(nouvelleentree);
-            
+           sharedGestionnaire.ListeEntrees.Add(nouvelleentree);
+            nomAjout.Text = "";
+            descriptionAjout.Text = "";
+            // la fenêtre reste ouverte seulement si la case est cochée
+            if(checkee==false)
+            { this.Close(); }
+
         }
         // routed commande pour pouvoir fermer la fenetre 
         public static RoutedCommand AnnulerCmd = new RoutedCommand();
@@ -53,14 +61,22 @@ namespace BdeBGTD
         {
             e.CanExecute = true;
         }
-
+// si l'utilisateur clicque sur annuler les textbox sont vidées et la fenêtre est fermée
         private void Annuler_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             nomAjout.Text ="";
             descriptionAjout.Text = "";
             this.Close();
         }
+// les deux méthodes changent la valeur du boolean checkée dépendemment de l'état de la checkbox
+        private void checkAjout_Checked(object sender, RoutedEventArgs e)
+        {
+            checkee = true;
+        }
 
-
+        private void checkAjout_Unchecked(object sender, RoutedEventArgs e)
+        {
+            checkee=false;
+        }
     }
 }
