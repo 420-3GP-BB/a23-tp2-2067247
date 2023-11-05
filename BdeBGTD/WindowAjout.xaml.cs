@@ -30,9 +30,9 @@ namespace BdeBGTD
             
         }
        private Boolean checkee= false;
-        //déclaration d'un gestionnaire patagé entre les fenêtres obtenu grâce à chat gpt
+        //déclaration d'un gestionnaire patagé entre les fenêtres 
         GestionnaireGTD sharedGestionnaire = (GestionnaireGTD)Application.Current.MainWindow.DataContext;
-        // routed commande pour pouvoir fermer la fenetre 
+        // routed commande pour pouvoir fermer la fenetre et ajouter les nouvelles entrees à la liste 
         public static RoutedCommand ConfirmerCmd = new RoutedCommand();
 
         private void Confirmer_CanExecute(object sender, CanExecuteRoutedEventArgs e)

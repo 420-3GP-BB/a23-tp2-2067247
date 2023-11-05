@@ -80,8 +80,8 @@
             <TextBlock Text="Système de suivi" Grid.Column="2" Grid.Row="1" Style="{StaticResource TitreCase}" />
 
             <Border Grid.Column="0" Grid.Row="2" Style="{StaticResource bordureListe}">
-                <!-- code réalisé grace à chat gpt -->
-                <ListBox ItemsSource="{Binding ListeEntrees}" Name="listBox">
+                <!-- code réalisé grace à chat gpt permet de mettre à jour l'Affichage de la listeentrees automatiquement  -->
+                <ListBox ItemsSource="{Binding ListeEntrees}" Name="listEntree">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Nom}" />
@@ -91,11 +91,24 @@
             </Border>
 
             <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource bordureListe}">
-
+                <ListBox ItemsSource="{Binding ListeActions}" Name="listActions">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Nom}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Border>
 
             <Border Grid.Column="2" Grid.Row="2" Style="{StaticResource bordureListe}">
-
+                <ListBox ItemsSource="{Binding ListeSuivis}" Name="listSuivi">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding SuiviText }" />
+                           
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Border>
 
         </Grid>

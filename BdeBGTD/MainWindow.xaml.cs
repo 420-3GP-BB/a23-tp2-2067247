@@ -27,6 +27,7 @@ namespace BdeBGTD
     public partial class MainWindow : Window
     {
         private DateTime dateAffichee;
+       
         private static GestionnaireGTD gestionnaire = new GestionnaireGTD();
 // fait en sorte que  les Listes pointent sur les mêmes listes déclarées dans getsionnaireGTD
         public ObservableCollection<ElementGTD> ListeEntrees
@@ -45,18 +46,24 @@ namespace BdeBGTD
         {
             get { return gestionnaire.ListeArchive; }
         }
+        public bool BriserLoop
+        {
+            set { briserLoop = value; } 
+            get { return briserLoop; }
+        }
 
+        private bool briserLoop = true;
         public MainWindow()
         {
         InitializeComponent();
 
-            
-           
-           dateAffichee = DateTime.Now;
+
+
+          
+        dateAffichee = DateTime.Now;
            date.Text = dateAffichee.ToShortDateString();
             DataContext = gestionnaire;
-
-
+            FiltrerActionsParDate();
 
         }
 
@@ -124,15 +131,34 @@ private void ouvrirFenetreAjout()
 
         private void Traiter_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            BriserLoop = true;
             ouvrirFenetreTraiter();
         }
-        private void ouvrirFenetreTraiter()
-        {// on entre la première entrée de la liste en paramètre de la nouvelle fenêtre <traiter entrée>
-            WindowTraiter windowTraiter = new WindowTraiter(ListeEntrees.FirstOrDefault());
-            windowTraiter.Owner = this;
-            windowTraiter.ShowDialog();
+       
+          private void ouvrirFenetreTraiter()
+          {// on entre la première entrée de la liste en paramètre de la nouvelle fenêtre <traiter entrée> et rentre dans un boucle qui continue tant qu'il y a des elements dans la liste
+            while (gestionnaire.ListeEntrees.Count­>0 && BriserLoop) { 
+              WindowTraiter windowTraiter = new WindowTraiter(ListeEntrees.FirstOrDefault());
+              windowTraiter.Owner = this;
+              windowTraiter.ShowDialog();
+            }
 
+          }
+
+        private void FiltrerActionsParDate()
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListeActions);
+            view.Filter = item =>
+            {
+                ElementGTD element = item as ElementGTD;
+                if (element != null && element.DateRappel != null)
+                {
+                    return string.Compare(element.DateRappel, date.Text) <= 0; 
+                }
+                return false; // No match
+            };
         }
+
 
 
     }

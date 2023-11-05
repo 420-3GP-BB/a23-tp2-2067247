@@ -20,25 +20,25 @@ namespace GTD
         // nom de la tache, c'est un attribut obligatoire
         public String Nom
         {
-            private set;
+            set;
             get;
         }
         // statut de la tache, c'est un attribut obligatoire
         public String Statut
         {
-            private set;
+            set;
             get;
         }
         // description de la tache
         public String Description
         {
-            private set;
+            set;
             get;
         }
         // date de rappel de la tache pour les taches incubées ou suivies
         public String DateRappel
         {
-            private set;
+            set;
             get;
         }
 
@@ -89,6 +89,13 @@ namespace GTD
             }
 
             return element_gtd;
+        }
+       public string SuiviText
+        {
+            get
+            {
+                return $"{Nom} ({DateRappel})";
+            }
         }
     }
 }

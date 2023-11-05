@@ -1,6 +1,7 @@
 ﻿using GTD;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,23 +22,32 @@ namespace BdeBGTD
     /// </summary>
     public partial class WindowTraiter : Window
     {
+        private ElementGTD elementAffiche;
+
         public WindowTraiter(ElementGTD firstElement)
         {
             InitializeComponent();
+            elementAffiche = firstElement;
             nomTraiter.Text = firstElement.Nom;
             descriptionTraiter.Text = firstElement.Description;
-        }
-        //déclaration d'un gestionnaire patagé entre les fenêtres obtenu grâce à chat gpt
-        GestionnaireGTD sharedGestionnaire = (GestionnaireGTD)Application.Current.MainWindow.DataContext;
-        private void descriptionAjout_TextChanged(object sender, TextChangedEventArgs e)
-        {
+            bool fermerFenetre = ((MainWindow)Application.Current.MainWindow).BriserLoop;
+            // j'ai du enlever les boutons car sinon on serait coicés dans une boucles tant qu'il ya des élémemnts dans la listeEntrées
+            WindowStyle = WindowStyle.None;
+
 
         }
+       
+        //déclaration d'un gestionnaire patagé entre les fenêtres obtenu grâce à chat gpt
+        GestionnaireGTD sharedGestionnaire = (GestionnaireGTD)Application.Current.MainWindow.DataContext;
+        
 
         private void Retour_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            ((MainWindow)Application.Current.MainWindow).BriserLoop = false;
         }
+      
+       
 
         /// <summary>
         /// Permet de mettre l'entrée dans la liste de suivies en changeant son type
@@ -52,6 +62,12 @@ namespace BdeBGTD
 
         private void Incuber_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            WindowChoixDate windowChoixDate = new WindowChoixDate("Date pour suivi");
+            windowChoixDate.ShowDialog();
+            elementAffiche.DateRappel = windowChoixDate.DateString;
+            elementAffiche.Statut = "Suivi";
+            sharedGestionnaire.ListeEntrees.Remove(elementAffiche);
+            sharedGestionnaire.ListeSuivis.Add(elementAffiche);
             this.Close();
         }
         /// <summary>
@@ -66,6 +82,9 @@ namespace BdeBGTD
         
         private void ActionRapide_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            sharedGestionnaire.ListeEntrees.Remove(elementAffiche);
+            elementAffiche.Statut = "Archive";
+            sharedGestionnaire.ListeArchive.Add(elementAffiche);
             this.Close();
         }
         /// <summary>
@@ -81,7 +100,16 @@ namespace BdeBGTD
 
         private void Planifier_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            WindowChoixDate windowChoixDate = new WindowChoixDate("Planifier une Action");
+            windowChoixDate.ShowDialog();
+            elementAffiche.DateRappel = windowChoixDate.DateString;
+            elementAffiche.Statut = "Action";
+            sharedGestionnaire.ListeEntrees.Remove(elementAffiche);
+            sharedGestionnaire.ListeActions.Add(elementAffiche);
             this.Close();
+
+           
+
         }
         /// <summary>
         /// destruction de l'entrée sans archivage
@@ -95,7 +123,13 @@ namespace BdeBGTD
 
         private void Poubelle_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            sharedGestionnaire.ListeEntrees.Remove(elementAffiche);
             this.Close();
+        }
+
+        private void Calendrier_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

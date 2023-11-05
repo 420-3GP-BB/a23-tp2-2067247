@@ -7,36 +7,47 @@
         mc:Ignorable="d"
         Title="WindowTraiter" Height="375" Width="525"
         WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+       
+        
         >
+
     <Window.CommandBindings>
-    <CommandBinding Command="{x:Static local:WindowTraiter.ActionRapideCmd}"
+        <CommandBinding Command="{x:Static local:WindowTraiter.ActionRapideCmd}"
     Executed="ActionRapide_Executed"
     CanExecute="ActionRapide_CanExecute"/>
         <CommandBinding Command="{x:Static local:WindowTraiter.PlanifierCmd}"
-Executed="ActionRapide_Executed"
-CanExecute="ActionRapide_CanExecute"/>
+Executed="Planifier_Executed"
+CanExecute="Planifier_CanExecute"/>
         <CommandBinding Command="{x:Static local:WindowTraiter.IncuberCmd}"
-Executed="ActionRapide_Executed"
-CanExecute="ActionRapide_CanExecute"/>
+Executed="Incuber_Executed"
+CanExecute="Incuber_CanExecute"/>
         <CommandBinding Command="{x:Static local:WindowTraiter.PoubelleCmd}"
-Executed="ActionRapide_Executed"
-CanExecute="ActionRapide_CanExecute"/>
+Executed="Poubelle_Executed"
+CanExecute="Poubelle_CanExecute"/>
     </Window.CommandBindings>
-    <Grid>
-        <StackPanel>
-            <TextBlock FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Text="Tri de la boîte d'entrées"/>
-            <StackPanel Orientation="Horizontal"   >
-                <TextBox x:Name="nomTraiter" Width="375" Margin="5,5,15,5"  />
-                <Button Width="60" Content="Retour" Margin="25,5,5,5" Click="Retour_Click"/>
+    <Border BorderBrush="Black" BorderThickness="2">
+        <Grid>
+
+            <StackPanel>
+                <!-- j'ai du creer ce bouton pour pouvoir quitter la fênêtre et briser la boucle étant donné que j'ai enlevé les bouton par défaut-->
+                <StackPanel Width="525" Background="LightGray" Orientation="Horizontal"  >
+                    <Button Margin="505,0,0,0" Content="X" FontWeight="Bold" FontSize="8" Click="Retour_Click" Width="15" Height="15" />
+                </StackPanel>
+                <TextBlock FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Text="Tri de la boîte d'entrées"/>
+                <StackPanel Orientation="Horizontal"   >
+                    <TextBox x:Name="nomTraiter" Width="375" Margin="9,5,15,5"  />
+                    <Button Width="60" Content="Retour" Margin="39,5,5,5" Click="Retour_Click"/>
+                </StackPanel>
+                <TextBox x:Name="descriptionTraiter" Margin="0,5,15,5" Width="488" Height="200"/>
+                <StackPanel Margin="15" Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <Button Width="100" Height="20" Margin="5,5,15,5" Content="Incuber" Command="{x:Static local:WindowTraiter.IncuberCmd}"/>
+                    <Button Width="100" Height="20" Margin="5,5,15,5" Content="Action rapide" Command="{x:Static local:WindowTraiter.ActionRapideCmd}" />
+                    <Button Width="100" Height="20" Margin="5,5,15,5" Content="Planifier action" Command="{x:Static local:WindowTraiter.PlanifierCmd}"/>
+                    <Button Width="100" Height="20" Margin="5,5,15,5" Content="Poubelle" Command="{x:Static local:WindowTraiter.PoubelleCmd}"/>
+                </StackPanel>
+
             </StackPanel>
-            <TextBox Margin="5,15,15,5" x:Name="descriptionTraiter" Width="488" Height="200" TextChanged="descriptionAjout_TextChanged"/>
-            <StackPanel Margin="15" Orientation="Horizontal" HorizontalAlignment="Center" >
-                <Button Width="100" Height="20" Margin="5,5,15,5" Content="Incuber" Command="{x:Static local:WindowTraiter.IncuberCmd}"/>
-                <Button Width="100" Height="20" Margin="5,5,15,5" Content="Action rapide" Command="{x:Static local:WindowTraiter.ActionRapideCmd}" />
-                <Button Width="100" Height="20" Margin="5,5,15,5" Content="Planifier action" Command="{x:Static local:WindowTraiter.PlanifierCmd}"/>
-                <Button Width="100" Height="20" Margin="5,5,15,5" Content="Poubelle" Command="{x:Static local:WindowTraiter.PoubelleCmd}"/>
-            </StackPanel>
-            
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </Border>
 </Window>
