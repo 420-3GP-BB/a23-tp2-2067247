@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:BdeBGTD"
         mc:Ignorable="d"
         Title="WindowAjout"  Height="325" Width="400"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:WindowAjout.ConfirmerCmd}"
                     Executed="Confirmer_Executed"

@@ -38,7 +38,7 @@ namespace BdeBGTD
         // si l'utilisateur clicque sur annuler lla fenêtre est fermée
         private void Annuler_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-           
+           DateString= "";
             this.Close();
         }
 

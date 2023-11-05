@@ -72,6 +72,7 @@ namespace BdeBGTD
         //Ajoute 1 jour a la date affichée
             dateAffichee = dateAffichee.AddDays(1);
             ChangerDate(dateAffichee);
+            FiltrerActionsParDate();
         }
         //met à jour la date àpres l'ajout de 1 jour
         private void ChangerDate(DateTime nouvelleDate)

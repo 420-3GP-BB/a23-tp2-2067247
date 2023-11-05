@@ -63,12 +63,22 @@ namespace BdeBGTD
         private void Incuber_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             WindowChoixDate windowChoixDate = new WindowChoixDate("Date pour suivi");
+            windowChoixDate.Owner = this;
             windowChoixDate.ShowDialog();
-            elementAffiche.DateRappel = windowChoixDate.DateString;
-            elementAffiche.Statut = "Suivi";
-            sharedGestionnaire.ListeEntrees.Remove(elementAffiche);
-            sharedGestionnaire.ListeSuivis.Add(elementAffiche);
-            this.Close();
+            // on ne fait rien tant que une date n'a pas été sélectionnée
+            if (!string.IsNullOrEmpty(windowChoixDate.DateString))
+            {
+                elementAffiche.DateRappel = windowChoixDate.DateString;
+                elementAffiche.Statut = "Suivi";
+                sharedGestionnaire.ListeEntrees.Remove(elementAffiche);
+                sharedGestionnaire.ListeSuivis.Add(elementAffiche);
+                this.Close();
+            }
+            else
+            {
+                this.Close();
+            }
+
         }
         /// <summary>
         /// Permet d'effacer de laliste d'entrées et de l'archiver 
@@ -101,14 +111,24 @@ namespace BdeBGTD
         private void Planifier_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             WindowChoixDate windowChoixDate = new WindowChoixDate("Planifier une Action");
+            windowChoixDate.Owner=this;
             windowChoixDate.ShowDialog();
-            elementAffiche.DateRappel = windowChoixDate.DateString;
-            elementAffiche.Statut = "Action";
-            sharedGestionnaire.ListeEntrees.Remove(elementAffiche);
-            sharedGestionnaire.ListeActions.Add(elementAffiche);
-            this.Close();
+            // on ne fait rien tant que une date n'a pas été sélectionnée
+            if (!string.IsNullOrEmpty(windowChoixDate.DateString))
+            {
+                elementAffiche.DateRappel = windowChoixDate.DateString;
+                elementAffiche.Statut = "Action";
+                sharedGestionnaire.ListeEntrees.Remove(elementAffiche);
+                sharedGestionnaire.ListeActions.Add(elementAffiche);
+                this.Close();
+            }
+            else
+            {
+                this.Close();
+            }
 
-           
+
+
 
         }
         /// <summary>
@@ -127,9 +147,6 @@ namespace BdeBGTD
             this.Close();
         }
 
-        private void Calendrier_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+       
     }
 }

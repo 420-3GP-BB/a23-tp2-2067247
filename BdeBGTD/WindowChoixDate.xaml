@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:BdeBGTD"
         mc:Ignorable="d"
         Title="WindowChoixDate" Height="300" Width="300"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+         WindowStartupLocation="CenterOwner">
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:WindowChoixDate.AnnulerCmd}"
           Executed="Annuler_Executed"
