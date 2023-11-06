@@ -68,18 +68,26 @@ namespace BdeBGTD
             // on ne fait rien tant que une date n'a pas été sélectionnée
             if (!string.IsNullOrEmpty(windowChoixDate.DateString))
             {
+                
                 elementAffiche.DateRappel = windowChoixDate.DateString;
                 elementAffiche.Statut = "Suivi";
                 sharedGestionnaire.ListeEntrees.Remove(elementAffiche);
                 sharedGestionnaire.ListeSuivis.Add(elementAffiche);
+                modifierNomDescription();
                 this.Close();
             }
             else
             {
+                modifierNomDescription();
                 this.Close();
             }
-
+            
+            
         }
+
+      
+
+           
         /// <summary>
         /// Permet d'effacer de laliste d'entrées et de l'archiver 
         /// </summary>
@@ -92,8 +100,10 @@ namespace BdeBGTD
         
         private void ActionRapide_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            
             sharedGestionnaire.ListeEntrees.Remove(elementAffiche);
             elementAffiche.Statut = "Archive";
+            modifierNomDescription();
             sharedGestionnaire.ListeArchive.Add(elementAffiche);
             this.Close();
         }
@@ -119,6 +129,7 @@ namespace BdeBGTD
                 elementAffiche.DateRappel = windowChoixDate.DateString;
                 elementAffiche.Statut = "Action";
                 sharedGestionnaire.ListeEntrees.Remove(elementAffiche);
+                modifierNomDescription();
                 sharedGestionnaire.ListeActions.Add(elementAffiche);
                 this.Close();
             }
@@ -147,6 +158,16 @@ namespace BdeBGTD
             this.Close();
         }
 
-       
+        /// <summary>
+        /// methode permettant de modifier le nom et la description de l'entree
+        /// </summary>
+        private void modifierNomDescription()
+        {
+            if (nomTraiter.Text != "")
+            {
+                elementAffiche.Nom = nomTraiter.Text;
+            }
+            elementAffiche.Description = descriptionTraiter.Text;
+        }
     }
 }

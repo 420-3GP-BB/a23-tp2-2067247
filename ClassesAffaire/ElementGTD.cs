@@ -42,7 +42,8 @@ namespace GTD
             get;
         }
 
-      
+
+
         /// <summary>
         /// methode permettant de convertir un élément xml en objet
         /// </summary>

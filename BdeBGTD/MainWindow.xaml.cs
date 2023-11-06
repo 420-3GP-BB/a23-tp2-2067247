@@ -64,6 +64,8 @@ namespace BdeBGTD
            date.Text = dateAffichee.ToShortDateString();
             DataContext = gestionnaire;
             FiltrerActionsParDate();
+           
+
 
         }
 
@@ -160,7 +162,15 @@ private void ouvrirFenetreAjout()
             };
         }
 
+        private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ListBoxItem action = sender as ListBoxItem;
+           ElementGTD actionGTD= (ElementGTD)action.DataContext;
 
-
+            WindowTraiterAction windowTraiterAction = new WindowTraiterAction(actionGTD);
+            windowTraiterAction.Owner = this;
+            windowTraiterAction.ShowDialog();
+            FiltrerActionsParDate();
+        }
     }
 }

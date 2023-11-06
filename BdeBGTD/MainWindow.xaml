@@ -91,10 +91,12 @@
             </Border>
 
             <Border Grid.Column="1" Grid.Row="2" Style="{StaticResource bordureListe}">
-                <ListBox ItemsSource="{Binding ListeActions}" Name="listActions">
+                <ListBox ItemsSource="{Binding ListeActions}" Name="listActions" >
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Nom}" />
+                            <ListBoxItem  Width="350" MouseDoubleClick="ListBoxItem_MouseDoubleClick">
+                                <TextBlock Text="{Binding Nom}" />
+                                </ListBoxItem>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -104,6 +106,7 @@
                 <ListBox ItemsSource="{Binding ListeSuivis}" Name="listSuivi">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
+                            
                             <TextBlock Text="{Binding SuiviText }" />
                            
                         </DataTemplate>
