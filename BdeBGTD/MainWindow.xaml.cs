@@ -29,23 +29,7 @@ namespace BdeBGTD
         private DateTime dateAffichee;
        
         private static GestionnaireGTD gestionnaire = new GestionnaireGTD();
-// fait en sorte que  les Listes pointent sur les mêmes listes déclarées dans getsionnaireGTD
-        public ObservableCollection<ElementGTD> ListeEntrees
-        {
-            get { return gestionnaire.ListeEntrees; }
-        }
-        public ObservableCollection<ElementGTD> ListeSuivis
-        {
-            get { return gestionnaire.ListeSuivis; }
-        }
-        public ObservableCollection<ElementGTD> ListeActions
-        {
-            get { return gestionnaire.ListeActions; }
-        }
-        public ObservableCollection<ElementGTD> ListeArchive
-        {
-            get { return gestionnaire.ListeArchive; }
-        }
+        //bolean permettant de sortir de la boucle qui affiche le traitement d'Actions 
         public bool BriserLoop
         {
             set { briserLoop = value; } 
@@ -129,7 +113,7 @@ private void ouvrirFenetreAjout()
 
         private void Traiter_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            if (ListeEntrees.Count()>0)
+            if (gestionnaire.ListeEntrees.Count()>0)
             {
                 e.CanExecute = true;
             }else
@@ -145,7 +129,7 @@ private void ouvrirFenetreAjout()
           private void ouvrirFenetreTraiter()
           {// on entre la première entrée de la liste en paramètre de la nouvelle fenêtre <traiter entrée> et rentre dans un boucle qui continue tant qu'il y a des elements dans la liste
             while (gestionnaire.ListeEntrees.Count­>0 && BriserLoop) { 
-              WindowTraiter windowTraiter = new WindowTraiter(ListeEntrees.FirstOrDefault());
+              WindowTraiter windowTraiter = new WindowTraiter(gestionnaire.ListeEntrees.FirstOrDefault());
               windowTraiter.Owner = this;
               windowTraiter.ShowDialog();
             }
@@ -157,7 +141,7 @@ private void ouvrirFenetreAjout()
         /// </summary>
         private void FiltrerActionsParDate()
         {// creation d'une vue pour la listeActions
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListeActions);
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(gestionnaire.ListeActions);
             //mise en place du filtre
             view.Filter = item =>
             {
@@ -175,7 +159,7 @@ private void ouvrirFenetreAjout()
         /// </summary>
         private void FiltrerSuiviesParDate()
         {
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListeSuivis);
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(gestionnaire.ListeSuivis);
             view.Filter = item =>
             {
                 ElementGTD element = item as ElementGTD;
