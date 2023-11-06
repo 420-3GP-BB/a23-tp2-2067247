@@ -29,7 +29,7 @@ namespace BdeBGTD
         private DateTime dateAffichee;
        
         private static GestionnaireGTD gestionnaire = new GestionnaireGTD();
-        //bolean permettant de sortir de la boucle qui affiche le traitement d'Actions 
+        //boolean permettant de sortir de la boucle qui affiche le traitement d'Actions 
         public bool BriserLoop
         {
             set { briserLoop = value; } 
@@ -103,11 +103,21 @@ private void ouvrirFenetreAjout()
 
         }
 
-        private void Ajout_Click(object sender, RoutedEventArgs e)
+
+        public static RoutedCommand AjoutCmd = new RoutedCommand();
+
+        private void Ajout_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            
+                e.CanExecute = true;
+           
+        }
+
+        private void Ajout_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             ouvrirFenetreAjout();
-
         }
+     
 
         public static RoutedCommand TraiterCmd = new RoutedCommand();
 

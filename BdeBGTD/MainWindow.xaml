@@ -14,7 +14,16 @@
         <CommandBinding Command="{x:Static local:MainWindow.TraiterCmd}"
             Executed="Traiter_Executed"
             CanExecute="Traiter_CanExecute"/>
+        <CommandBinding Command="{x:Static local:MainWindow.AjoutCmd}"
+    Executed="Ajout_Executed"
+    CanExecute="Ajout_CanExecute"/>
     </Window.CommandBindings>
+    <!--https://stackoverflow.com/questions/4682915/defining-menuitem-shortcuts !>
+    <Window.InputBindings>
+        <KeyBinding Key="Q" Modifiers="Control" Command="{x:Static local:MainWindow.QuitterCmd}"/>
+        <KeyBinding Key="A" Modifiers="Control" Command="{x:Static local:MainWindow.AjoutCmd}"/>
+        <KeyBinding Key="T" Modifiers="Control" Command="{x:Static local:MainWindow.TraiterCmd}"/>
+    </Window.InputBindings>
     <Window.Resources>
         <Style x:Key="bordureListe">
             <Setter Property="Border.BorderBrush" Value="Black"/>
@@ -44,12 +53,13 @@
         <Menu DockPanel.Dock="Top" Style="{StaticResource menu}" >
             <MenuItem Header="_Fichier">
                 <MenuItem Header="_Quitter"  Command="{x:Static local:MainWindow.QuitterCmd}" InputGestureText="Ctrl+Q"/>
+                
             </MenuItem>
             <MenuItem Header="_Boite d'entrée">
-                <MenuItem Header="Ajouter entrée(s)" Click="Ajout_Click" InputGestureText="Ctrl+A"/>
+                <MenuItem Header="Ajouter entrée(s)" Command="{x:Static local:MainWindow.AjoutCmd}"  InputGestureText="Ctrl+A"/>
                 <MenuItem Header="Traiter" Command="{x:Static local:MainWindow.TraiterCmd}"  InputGestureText="Ctrl+T"/>
-            </MenuItem> 
-                <MenuItem Header="_Aide" >
+            </MenuItem>
+            <MenuItem Header="_Aide" >
                    <MenuItem Click="ClickAPropos" Header="À propos..." />
             </MenuItem>
 
