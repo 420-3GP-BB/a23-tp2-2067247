@@ -64,7 +64,9 @@ namespace BdeBGTD
            date.Text = dateAffichee.ToShortDateString();
             DataContext = gestionnaire;
             FiltrerActionsParDate();
-           
+            FiltrerSuiviesParDate();
+
+
 
 
         }
@@ -75,6 +77,8 @@ namespace BdeBGTD
             dateAffichee = dateAffichee.AddDays(1);
             ChangerDate(dateAffichee);
             FiltrerActionsParDate();
+            miseAJourSuivi();
+            FiltrerSuiviesParDate();
         }
         //met à jour la date àpres l'ajout de 1 jour
         private void ChangerDate(DateTime nouvelleDate)
@@ -147,21 +151,45 @@ private void ouvrirFenetreAjout()
             }
 
           }
-
+        /// <summary>
+        /// Méthode qui permet de n'afficher que les actions dont la date est courrante ou passée
+        ///  concept de view découvert grâce à chat gpt
+        /// </summary>
         private void FiltrerActionsParDate()
-        {
+        {// creation d'une vue pour la listeActions
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListeActions);
+            //mise en place du filtre
+            view.Filter = item =>
+            {
+                ElementGTD element = item as ElementGTD;
+                //validation de la non-nullité de l'element
+                if (element != null && element.DateRappel != null)
+                {//comparaison entre les date rappel et la date affichee
+                    return string.Compare(element.DateRappel, date.Text) <= 0; 
+                }
+                return false; // au cas ou il n'y a pas de match
+            };
+        }
+        /// <summary>
+        /// Methode fait exactement L,inverse de la méthode precedente pour les actions suivies ou incubée
+        /// </summary>
+        private void FiltrerSuiviesParDate()
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListeSuivis);
             view.Filter = item =>
             {
                 ElementGTD element = item as ElementGTD;
                 if (element != null && element.DateRappel != null)
                 {
-                    return string.Compare(element.DateRappel, date.Text) <= 0; 
+                    return string.Compare(element.DateRappel, date.Text) > 0;
                 }
-                return false; // No match
+                return false; 
             };
         }
-
+        /// <summary>
+        /// Permet d'ouvrir la fenetre de traitement d'Action en prenant l'action cliquée en paramètre
+        /// </summary>
+       
         private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ListBoxItem action = sender as ListBoxItem;
@@ -171,6 +199,36 @@ private void ouvrirFenetreAjout()
             windowTraiterAction.Owner = this;
             windowTraiterAction.ShowDialog();
             FiltrerActionsParDate();
+        }
+
+        private void miseAJourSuivi()
+        {
+           //creation d'Une liste temporaire qui contientiendra les elements à deplacer
+            List<ElementGTD> elementADeplacer = new List<ElementGTD>();
+
+            foreach (ElementGTD suiviElement in gestionnaire.ListeSuivis)
+            {
+                if (suiviElement.DateRappel == date.Text)
+                {
+                    // Creation d'un nouvel element GTD avec seulement un nom un statut et une description
+                    ElementGTD newEntreeItem = new ElementGTD(suiviElement.Nom, suiviElement.Description, "Entree");
+                    elementADeplacer.Add(newEntreeItem);
+
+                }
+            }
+
+            // Add the new elements to ListeEntrees
+            foreach (ElementGTD newEntreeItem in elementADeplacer)
+            {
+               gestionnaire.ListeEntrees.Add(newEntreeItem);
+            }
+
+            // Remove the matching items from ListeSuivi
+            foreach (ElementGTD suiviItem in elementADeplacer)
+            {
+                gestionnaire.ListeSuivis.Remove(suiviItem);
+                
+            }
         }
     }
 }
