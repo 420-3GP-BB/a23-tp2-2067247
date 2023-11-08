@@ -68,7 +68,7 @@ namespace Tests
             elem.DateRappel = "2023-11-08";
 
 
-            // ASSERT
+            // ASSERT isFalse isTrue découvert grâce à chat gpt
             Assert.IsFalse(_gestionnaireGTD.ListeSuivis.Contains(elem)); // elem ne devrait plus être dans listeSuivis
             Assert.IsTrue(_gestionnaireGTD.ListeEntrees.Contains(elem)); // elem devrait être dans listeEntrees
         }

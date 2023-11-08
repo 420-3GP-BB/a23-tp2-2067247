@@ -12,7 +12,7 @@
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <Window.CommandBindings>
-        <!-- liaison des routed commands-->
+        <!--  liaison des routed commands  -->
         <CommandBinding
             CanExecute="Confirmer_CanExecute"
             Command="{x:Static local:WindowAjout.ConfirmerCmd}"
