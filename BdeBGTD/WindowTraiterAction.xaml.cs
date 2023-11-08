@@ -28,33 +28,33 @@ namespace BdeBGTD
             decription.Text = element.Description;
         }
         ElementGTD actionSelectionne;
-      
+
         //déclaration d'un gestionnaire patagé entre les fenêtres obtenu grâce à chat gpt
         GestionnaireGTD sharedGestionnaire = (GestionnaireGTD)Application.Current.MainWindow.DataContext;
         private void terminer_Click(object sender, RoutedEventArgs e)
         {
-                if (titre.Text != "")
-                {
-                    actionSelectionne.Nom = titre.Text;
-            }             
-         actionSelectionne.Description = decription.Text;      
-         actionSelectionne.Statut = "Archive";
-         sharedGestionnaire.ListeActions.Remove(actionSelectionne);
-         sharedGestionnaire.ListeArchive.Add(actionSelectionne);
-            
+            if (titre.Text != "")
+            {
+                actionSelectionne.Nom = titre.Text;
+            }
+            actionSelectionne.Description = decription.Text;
+            actionSelectionne.Statut = "Archive";
+            sharedGestionnaire.ListeActions.Remove(actionSelectionne);
+            sharedGestionnaire.ListeArchive.Add(actionSelectionne);
+
             this.Close();
         }
         private void poursuivre_Click(object sender, RoutedEventArgs e)
         {
-            if(titre.Text!= "")
-            { 
-            actionSelectionne.Nom = titre.Text;       
+            if (titre.Text != "")
+            {
+                actionSelectionne.Nom = titre.Text;
             }
             actionSelectionne.Description = decription.Text;
             this.Close();
-            
+
         }
-        
+
 
     }
 }

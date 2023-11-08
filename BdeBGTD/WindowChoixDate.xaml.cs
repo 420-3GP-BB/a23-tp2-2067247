@@ -21,11 +21,11 @@ namespace BdeBGTD
     /// </summary>
     public partial class WindowChoixDate : Window
     {
-        public WindowChoixDate( string titre)
+        public WindowChoixDate(string titre)
         {
             InitializeComponent();
             title.Text = titre;
-           
+
         }
         public string? DateString { get; private set; }
         // routed commande pour pouvoir fermer la fenetre 
@@ -38,7 +38,7 @@ namespace BdeBGTD
         // si l'utilisateur clicque sur annuler lla fenêtre est fermée
         private void Annuler_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-           DateString= "";
+            DateString = "";
             this.Close();
         }
 

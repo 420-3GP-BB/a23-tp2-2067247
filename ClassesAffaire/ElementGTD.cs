@@ -6,17 +6,18 @@ namespace GTD
     public class ElementGTD : IconversionXML
     {
 
-        public ElementGTD(XmlElement elementXml) 
-        { 
-        DeXML(elementXml);
+        public ElementGTD(XmlElement elementXml)
+        {
+            DeXML(elementXml);
         }
 
         public ElementGTD(string nomTache, string descriptionTache, string statutTache)
         {
-           Nom = nomTache;
-           Description = descriptionTache;
-           Statut = statutTache;
+            Nom = nomTache;
+            Description = descriptionTache;
+            Statut = statutTache;
         }
+
         // nom de la tache, c'est un attribut obligatoire
         public String Nom
         {
@@ -52,7 +53,7 @@ namespace GTD
         {
             Nom = elem.GetAttribute("nom");
             Statut = elem.GetAttribute("statut");
-        // etant donnée que la description n'est pas obligatoire on verifie si elle est presente avant de la charger
+            // etant donnée que la description n'est pas obligatoire on verifie si elle est presente avant de la charger
             if (elem.HasChildNodes)
             {
                 Description = elem.FirstChild.InnerText.Trim();
@@ -60,7 +61,12 @@ namespace GTD
             else
             {
                 Description = string.Empty;
+            }// etant donnée que la date n'est pas obligatoire on verifie si elle est presente avant de la charger
+            if (elem.HasAttribute("dateRappel"))
+            {
+                DateRappel = elem.GetAttribute("dateRappel").Trim();
             }
+
         }
 
         /// <summary>
@@ -73,9 +79,9 @@ namespace GTD
             XmlElement element_gtd = doc.CreateElement("element_gtd");
             element_gtd.SetAttribute("nom", Nom);
             element_gtd.SetAttribute("statut", Statut);
-            
-     //on ajoute la date seulement si elle est présente
-            if (DateRappel != null) 
+
+            //on ajoute la date seulement si elle est présente
+            if (DateRappel != null)
             {
                 element_gtd.SetAttribute("dateRappel", DateRappel);
             }
@@ -83,7 +89,7 @@ namespace GTD
 
             if (!string.IsNullOrEmpty(Description))
             {
-     // On ajoute la description seuelemt si elle n'est pas vide
+                // On ajoute la description seuelemt si elle n'est pas vide
                 XmlElement elementDescription = doc.CreateElement("description");
                 elementDescription.InnerText = Description;
                 element_gtd.AppendChild(elementDescription);
@@ -91,7 +97,10 @@ namespace GTD
 
             return element_gtd;
         }
-       public string SuiviText
+        /// <summary>
+        /// retourne un text ôur l'affiche de la listeSuivis
+        /// </summary>
+        public string SuiviText
         {
             get
             {

@@ -13,9 +13,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 using ClassesAffaire;
 using GTD;
+using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.IO;
 
 
 
@@ -27,37 +30,44 @@ namespace BdeBGTD
     public partial class MainWindow : Window
     {
         private DateTime dateAffichee;
-       
+
         private static GestionnaireGTD gestionnaire = new GestionnaireGTD();
         //boolean permettant de sortir de la boucle qui affiche le traitement d'Actions 
         public bool BriserLoop
         {
-            set { briserLoop = value; } 
+            set { briserLoop = value; }
             get { return briserLoop; }
         }
 
         private bool briserLoop = true;
+        private static char DIR_SEPARATOR = System.IO.Path.DirectorySeparatorChar;
+        private static string pathFichier = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}{DIR_SEPARATOR}" +
+                        $"Fichiers-3GP{DIR_SEPARATOR}bdeb_gtd.xml";
         public MainWindow()
         {
-        InitializeComponent();
+            InitializeComponent();
 
-
-
-          
-        dateAffichee = DateTime.Now;
-           date.Text = dateAffichee.ToShortDateString();
+            //Verification de la presence du fichier
+            if (!File.Exists(pathFichier))
+            {
+                Console.Error.WriteLine($"Le fichier {pathFichier} n'existe pas");
+                System.Environment.Exit(1);
+            }
+            ChargerEntrees(pathFichier);
+            //affichage de la date actuelle au bon format
+            dateAffichee = DateTime.Now;
+            date.Text = dateAffichee.ToShortDateString();
             DataContext = gestionnaire;
+            //affichage des bonnes actions et bonnes suivies
             FiltrerActionsParDate();
             FiltrerSuiviesParDate();
-
-
-
+            Closing += MainWindow_Closing;
 
         }
 
         private void PlusButton_Click(object sender, RoutedEventArgs e)
         {
-        //Ajoute 1 jour a la date affichée
+            //Ajoute 1 jour a la date affichée
             dateAffichee = dateAffichee.AddDays(1);
             ChangerDate(dateAffichee);
             FiltrerActionsParDate();
@@ -74,7 +84,7 @@ namespace BdeBGTD
             //Ouvre la fenetre a propos
             WindowAPropos fenetreApropos = new WindowAPropos();
             fenetreApropos.ShowDialog();
-           
+
         }
 
         // routed commande pour pouvoir fermer la fenetre principale
@@ -91,42 +101,43 @@ namespace BdeBGTD
         }
         private void Quitter_Click(object sender, RoutedEventArgs e)
         {
-//sauvegarder a definir plus tard 
+            //sauvegarder a definir plus tard 
 
         }
-// ouvrir la fenetre d'ajout 
-private void ouvrirFenetreAjout()
+        // ouvrir la fenetre d'ajout 
+        private void ouvrirFenetreAjout()
         {
             WindowAjout windowAjout = new WindowAjout();
             windowAjout.Owner = this;
             windowAjout.ShowDialog();
 
         }
-
+        // routed commande permettant d'ouvrir la fenetre d'Ajout de'entree, elle reste toujours accessible
 
         public static RoutedCommand AjoutCmd = new RoutedCommand();
 
         private void Ajout_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            
-                e.CanExecute = true;
-           
+
+            e.CanExecute = true;
+
         }
 
         private void Ajout_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             ouvrirFenetreAjout();
         }
-     
+
 
         public static RoutedCommand TraiterCmd = new RoutedCommand();
 
         private void Traiter_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            if (gestionnaire.ListeEntrees.Count()>0)
+            if (gestionnaire.ListeEntrees.Count() > 0)
             {
                 e.CanExecute = true;
-            }else
+            }
+            else
             { e.CanExecute = false; }
         }
 
@@ -135,16 +146,17 @@ private void ouvrirFenetreAjout()
             BriserLoop = true;
             ouvrirFenetreTraiter();
         }
-       
-          private void ouvrirFenetreTraiter()
-          {// on entre la première entrée de la liste en paramètre de la nouvelle fenêtre <traiter entrée> et rentre dans un boucle qui continue tant qu'il y a des elements dans la liste
-            while (gestionnaire.ListeEntrees.Count­>0 && BriserLoop) { 
-              WindowTraiter windowTraiter = new WindowTraiter(gestionnaire.ListeEntrees.FirstOrDefault());
-              windowTraiter.Owner = this;
-              windowTraiter.ShowDialog();
+
+        private void ouvrirFenetreTraiter()
+        {// on entre la première entrée de la liste en paramètre de la nouvelle fenêtre <traiter entrée> et rentre dans un boucle qui continue tant qu'il y a des elements dans la liste
+            while (gestionnaire.ListeEntrees.Count­ > 0 && BriserLoop)
+            {
+                WindowTraiter windowTraiter = new WindowTraiter(gestionnaire.ListeEntrees.FirstOrDefault());
+                windowTraiter.Owner = this;
+                windowTraiter.ShowDialog();
             }
 
-          }
+        }
         /// <summary>
         /// Méthode qui permet de n'afficher que les actions dont la date est courrante ou passée
         ///  concept de view découvert grâce à chat gpt
@@ -159,7 +171,7 @@ private void ouvrirFenetreAjout()
                 //validation de la non-nullité de l'element
                 if (element != null && element.DateRappel != null)
                 {//comparaison entre les date rappel et la date affichee
-                    return string.Compare(element.DateRappel, date.Text) <= 0; 
+                    return string.Compare(element.DateRappel, date.Text) <= 0;
                 }
                 return false; // au cas ou il n'y a pas de match
             };
@@ -167,7 +179,7 @@ private void ouvrirFenetreAjout()
         /// <summary>
         /// Methode fait exactement L,inverse de la méthode precedente pour les actions suivies ou incubée
         /// </summary>
-        private void FiltrerSuiviesParDate()
+        public void FiltrerSuiviesParDate()
         {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(gestionnaire.ListeSuivis);
             view.Filter = item =>
@@ -177,17 +189,17 @@ private void ouvrirFenetreAjout()
                 {
                     return string.Compare(element.DateRappel, date.Text) > 0;
                 }
-                return false; 
+                return false;
             };
         }
         /// <summary>
         /// Permet d'ouvrir la fenetre de traitement d'Action en prenant l'action cliquée en paramètre
         /// </summary>
-       
+
         private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ListBoxItem action = sender as ListBoxItem;
-           ElementGTD actionGTD= (ElementGTD)action.DataContext;
+            ElementGTD actionGTD = (ElementGTD)action.DataContext;
 
             WindowTraiterAction windowTraiterAction = new WindowTraiterAction(actionGTD);
             windowTraiterAction.Owner = this;
@@ -197,7 +209,7 @@ private void ouvrirFenetreAjout()
 
         private void miseAJourSuivi()
         {
-           //creation d'Une liste temporaire qui contientiendra les elements à deplacer
+            //creation d'Une liste temporaire qui contientiendra les elements à deplacer
             List<ElementGTD> elementADeplacer = new List<ElementGTD>();
 
             foreach (ElementGTD suiviElement in gestionnaire.ListeSuivis)
@@ -205,24 +217,97 @@ private void ouvrirFenetreAjout()
                 if (suiviElement.DateRappel == date.Text)
                 {
                     // Creation d'un nouvel element GTD avec seulement un nom un statut et une description
-                    ElementGTD newEntreeItem = new ElementGTD(suiviElement.Nom, suiviElement.Description, "Entree");
-                    elementADeplacer.Add(newEntreeItem);
+                    ElementGTD nouvelleEntree = new ElementGTD(suiviElement.Nom, suiviElement.Description, "Entree");
+                    elementADeplacer.Add(nouvelleEntree);
 
                 }
             }
 
-            // Add the new elements to ListeEntrees
+            // ajout des nouvelles entree
             foreach (ElementGTD newEntreeItem in elementADeplacer)
             {
-               gestionnaire.ListeEntrees.Add(newEntreeItem);
+                gestionnaire.ListeEntrees.Add(newEntreeItem);
             }
 
-            // Remove the matching items from ListeSuivi
-            foreach (ElementGTD suiviItem in elementADeplacer)
+            // enlève les suivies de la liste
+            foreach (ElementGTD suiviElement in elementADeplacer)
             {
-                gestionnaire.ListeSuivis.Remove(suiviItem);
-                
+                gestionnaire.ListeSuivis.Remove(suiviElement);
+
             }
+        }
+
+        /// <summary>
+        /// methode eprmettant de charger les entrees presentes dans le fichier xml de depart
+        /// </summary>
+        /// <param name="nomFichier"></param>
+        private void ChargerEntrees(string nomFichier)
+        {
+            if (!File.Exists(nomFichier))
+            {
+                return;
+            }
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load(nomFichier);
+            XmlNodeList ListeElement = doc.DocumentElement.GetElementsByTagName("element_gtd");
+            // les elements sont chargés dans la liste appropriée dépendemment du statut
+            foreach (XmlElement element in ListeElement)
+            {
+                if (element.GetAttribute("statut") == "Entree")
+                {
+                    gestionnaire.ListeEntrees.Add(new ElementGTD(element));
+                }
+                if (element.GetAttribute("statut") == "Action")
+                {
+                    gestionnaire.ListeActions.Add(new ElementGTD(element));
+                }
+                if (element.GetAttribute("statut") == "Suivi")
+                {
+                    gestionnaire.ListeSuivis.Add(new ElementGTD(element));
+
+                }
+                if (element.GetAttribute("statut") == "Archive")
+                {
+                    gestionnaire.ListeArchive.Add(new ElementGTD(element));
+                }
+            }
+        }
+        //trouvé grace à chat gpt permet de de jumeller une methode à la fermeture du fichier 
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            SauvegarderFichier(pathFichier);
+        }
+        // Sauvegarde la liste de contacts de la liste dans un fichier xml liste par liste
+        void SauvegarderFichier(string pathFichier)
+        {
+            XmlDocument document = new XmlDocument();
+            XmlElement racine = document.CreateElement("gtd");
+            document.AppendChild(racine);
+
+            foreach (ElementGTD e in gestionnaire.ListeEntrees)
+            {
+                XmlElement element = e.VersXML(document);
+                racine.AppendChild(element);
+            }
+            foreach (ElementGTD e in gestionnaire.ListeActions)
+            {
+                XmlElement element = e.VersXML(document);
+                element.SetAttribute("dateRappel", e.DateRappel);
+                racine.AppendChild(element);
+            }
+            foreach (ElementGTD e in gestionnaire.ListeSuivis)
+            {
+                XmlElement element = e.VersXML(document);
+                element.SetAttribute("dateRappel", e.DateRappel);
+                racine.AppendChild(element);
+            }
+            foreach (ElementGTD e in gestionnaire.ListeArchive)
+            {
+                XmlElement element = e.VersXML(document);
+                racine.AppendChild(element);
+            }
+            document.Save(pathFichier);
         }
     }
 }

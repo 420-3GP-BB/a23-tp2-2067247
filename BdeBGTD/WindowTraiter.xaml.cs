@@ -36,18 +36,18 @@ namespace BdeBGTD
 
 
         }
-       
+
         //déclaration d'un gestionnaire patagé entre les fenêtres obtenu grâce à chat gpt
         GestionnaireGTD sharedGestionnaire = (GestionnaireGTD)Application.Current.MainWindow.DataContext;
-        
+
 
         private void Retour_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
             ((MainWindow)Application.Current.MainWindow).BriserLoop = false;
         }
-      
-       
+
+
 
         /// <summary>
         /// Permet de mettre l'entrée dans la liste de suivies en changeant son type
@@ -57,7 +57,7 @@ namespace BdeBGTD
         private void Incuber_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
-            
+
         }
 
         private void Incuber_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -68,7 +68,7 @@ namespace BdeBGTD
             // on ne fait rien tant que une date n'a pas été sélectionnée
             if (!string.IsNullOrEmpty(windowChoixDate.DateString))
             {
-                
+
                 elementAffiche.DateRappel = windowChoixDate.DateString;
                 elementAffiche.Statut = "Suivi";
                 sharedGestionnaire.ListeEntrees.Remove(elementAffiche);
@@ -81,13 +81,13 @@ namespace BdeBGTD
                 modifierNomDescription();
                 this.Close();
             }
-            
-            
+
+
         }
 
-      
 
-           
+
+
         /// <summary>
         /// Permet d'effacer de laliste d'entrées et de l'archiver 
         /// </summary>
@@ -97,10 +97,10 @@ namespace BdeBGTD
         {
             e.CanExecute = true;
         }
-        
+
         private void ActionRapide_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            
+
             sharedGestionnaire.ListeEntrees.Remove(elementAffiche);
             elementAffiche.Statut = "Archive";
             modifierNomDescription();
@@ -121,7 +121,7 @@ namespace BdeBGTD
         private void Planifier_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             WindowChoixDate windowChoixDate = new WindowChoixDate("Planifier une Action");
-            windowChoixDate.Owner=this;
+            windowChoixDate.Owner = this;
             windowChoixDate.ShowDialog();
             // on ne fait rien tant que une date n'a pas été sélectionnée
             if (!string.IsNullOrEmpty(windowChoixDate.DateString))
