@@ -1,26 +1,35 @@
-﻿<Window x:Class="BdeBGTD.WindowAPropos"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BdeBGTD"
-        mc:Ignorable="d"
-        Title="À propos..." Height="175" Width="175" ResizeMode="NoResize" >
+﻿<Window
+    x:Class="BdeBGTD.WindowAPropos"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:BdeBGTD"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="À propos..."
+    Width="175"
+    Height="175"
+    ResizeMode="NoResize"
+    mc:Ignorable="d">
     <Window.CommandBindings>
-        <CommandBinding Command="{x:Static local:WindowAPropos.AProposCmd}"
-                        Executed="APropos_Executed"
-                        CanExecute="APropos_CanExecute"
-                        />
+        <CommandBinding
+            CanExecute="APropos_CanExecute"
+            Command="{x:Static local:WindowAPropos.AProposCmd}"
+            Executed="APropos_Executed" />
     </Window.CommandBindings>
     <Border BorderBrush="Black" BorderThickness="1">
-    <Grid >
-        <StackPanel Margin="8">
-            <TextBlock Margin="2,12,3,5" Text="BdeB GTD"/>
-            <TextBlock Margin="2,1,3,3" Text="Version 1.0"/>
-            <TextBlock Margin="2,1,3,3" Text="Auteur: Malak Fora "/>
-                <Button Margin="2,12,3,5" Width="45" Height="20" Content="OK" Command="{x:Static local:WindowAPropos.AProposCmd}"/>
-        </StackPanel>
-            
-    </Grid>
+        <Grid>
+            <StackPanel Margin="8">
+                <TextBlock Margin="2,12,3,5" Text="BdeB GTD" />
+                <TextBlock Margin="2,1,3,3" Text="Version 1.0" />
+                <TextBlock Margin="2,1,3,3" Text="Auteur: Malak Fora " />
+                <Button
+                    Width="45"
+                    Height="20"
+                    Margin="2,12,3,5"
+                    Command="{x:Static local:WindowAPropos.AProposCmd}"
+                    Content="OK" />
+            </StackPanel>
+
+        </Grid>
     </Border>
 </Window>

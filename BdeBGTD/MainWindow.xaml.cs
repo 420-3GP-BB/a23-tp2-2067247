@@ -38,8 +38,9 @@ namespace BdeBGTD
             set { briserLoop = value; }
             get { return briserLoop; }
         }
-
+        // pour que la fenetre traiter entree s'affiche
         private bool briserLoop = true;
+        //chemein pour le fichierXml
         private static char DIR_SEPARATOR = System.IO.Path.DirectorySeparatorChar;
         private static string pathFichier = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}{DIR_SEPARATOR}" +
                         $"Fichiers-3GP{DIR_SEPARATOR}bdeb_gtd.xml";
@@ -67,7 +68,7 @@ namespace BdeBGTD
 
         private void PlusButton_Click(object sender, RoutedEventArgs e)
         {
-            //Ajoute 1 jour a la date affichée
+            //Ajoute 1 jour a la date affichée et met à jour les listes
             dateAffichee = dateAffichee.AddDays(1);
             ChangerDate(dateAffichee);
             FiltrerActionsParDate();
@@ -79,9 +80,10 @@ namespace BdeBGTD
         {
             date.Text = nouvelleDate.ToShortDateString();
         }
+        //Ouvre la fenetre a propos
         private void ClickAPropos(object sender, RoutedEventArgs e)
         {
-            //Ouvre la fenetre a propos
+
             WindowAPropos fenetreApropos = new WindowAPropos();
             fenetreApropos.ShowDialog();
 
@@ -128,7 +130,7 @@ namespace BdeBGTD
             ouvrirFenetreAjout();
         }
 
-
+        // routed commande permettant d'ouvrir la fenetre de traitement d'entrees, elle reste tant qu'il y a des entrees
         public static RoutedCommand TraiterCmd = new RoutedCommand();
 
         private void Traiter_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -146,7 +148,9 @@ namespace BdeBGTD
             BriserLoop = true;
             ouvrirFenetreTraiter();
         }
-
+        /// <summary>
+        /// methode qui sert à l'ouverture de la fenetreTraiter 
+        /// </summary>
         private void ouvrirFenetreTraiter()
         {// on entre la première entrée de la liste en paramètre de la nouvelle fenêtre <traiter entrée> et rentre dans un boucle qui continue tant qu'il y a des elements dans la liste
             while (gestionnaire.ListeEntrees.Count­ > 0 && BriserLoop)
@@ -206,7 +210,9 @@ namespace BdeBGTD
             windowTraiterAction.ShowDialog();
             FiltrerActionsParDate();
         }
-
+        /// <summary>
+        /// methode permettant de mettre à jour la  la liste suivi, et de  creer un entree correspendante
+        /// </summary>
         private void miseAJourSuivi()
         {
             //creation d'Une liste temporaire qui contientiendra les elements à deplacer
@@ -240,7 +246,7 @@ namespace BdeBGTD
         /// <summary>
         /// methode eprmettant de charger les entrees presentes dans le fichier xml de depart
         /// </summary>
-        /// <param name="nomFichier"></param>
+        /// <param name="nomFichier">represente le fichier à lire</param>
         private void ChargerEntrees(string nomFichier)
         {
             if (!File.Exists(nomFichier))

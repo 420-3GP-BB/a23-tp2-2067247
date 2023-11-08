@@ -40,10 +40,11 @@ namespace BdeBGTD
         //déclaration d'un gestionnaire patagé entre les fenêtres obtenu grâce à chat gpt
         GestionnaireGTD sharedGestionnaire = (GestionnaireGTD)Application.Current.MainWindow.DataContext;
 
-
+        //ferme la fenêtre sans modification, comme une annulation
         private void Retour_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+           // modifierNomDescription(); //j'ai mis cette ligne en commentaire car je ne suis pas sure si ce bouton retour est supposé gardé les changements ou juste les annuler 
             ((MainWindow)Application.Current.MainWindow).BriserLoop = false;
         }
 
@@ -137,9 +138,6 @@ namespace BdeBGTD
             {
                 this.Close();
             }
-
-
-
 
         }
         /// <summary>

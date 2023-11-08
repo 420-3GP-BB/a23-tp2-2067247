@@ -5,12 +5,20 @@ namespace GTD
 {
     public class ElementGTD : IconversionXML
     {
-
+        /// <summary>
+        /// constructeur à partir du fichier xml
+        /// </summary>
+        /// <param name="elementXml"> element xml à parrtir duquel l'elelment gtd est cree</param>
         public ElementGTD(XmlElement elementXml)
         {
             DeXML(elementXml);
         }
-
+        /// <summary>
+        /// creation d'une element gtd dans le programme
+        /// </summary>
+        /// <param name="nomTache"> nom de la tache</param>
+        /// <param name="descriptionTache"> desction de la tache</param>
+        /// <param name="statutTache"> statut de la taxe</param>
         public ElementGTD(string nomTache, string descriptionTache, string statutTache)
         {
             Nom = nomTache;
@@ -36,7 +44,7 @@ namespace GTD
             set;
             get;
         }
-        // date de rappel de la tache pour les taches incubées ou suivies
+        // date de rappel de la tache pour les taches incubées, ou les actions planifiées
         public String DateRappel
         {
             set;

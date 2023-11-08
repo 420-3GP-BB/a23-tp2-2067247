@@ -1,25 +1,44 @@
-﻿<Window x:Class="BdeBGTD.WindowChoixDate"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BdeBGTD"
-        mc:Ignorable="d"
-        Title="WindowChoixDate" Height="300" Width="300"
-        ResizeMode="NoResize"
-         WindowStartupLocation="CenterOwner">
+﻿<Window
+    x:Class="BdeBGTD.WindowChoixDate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:BdeBGTD"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="WindowChoixDate"
+    Width="300"
+    Height="300"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
     <Window.CommandBindings>
-        <CommandBinding Command="{x:Static local:WindowChoixDate.AnnulerCmd}"
-          Executed="Annuler_Executed"
-          CanExecute="Annuler_CanExecute"
-          />
+        <CommandBinding
+            CanExecute="Annuler_CanExecute"
+            Command="{x:Static local:WindowChoixDate.AnnulerCmd}"
+            Executed="Annuler_Executed" />
     </Window.CommandBindings>
-    <Grid >
-        
+    <Grid>
+
         <StackPanel>
-            <TextBlock x:Name="title" Text="Titre" FontWeight="Bold" FontSize="25"  VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-            <Calendar x:Name="calendrier" Height="167" Width="183" Margin="10" VerticalAlignment="Center" MouseDoubleClick="Calendar_MouseDoubleClick" />
-            <Button Content="Annuler" Width="50" Margin="10" Command="{x:Static local:WindowChoixDate.AnnulerCmd}"/>
+            <TextBlock
+                x:Name="title"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                FontSize="25"
+                FontWeight="Bold"
+                Text="Titre" />
+            <Calendar
+                x:Name="calendrier"
+                Width="183"
+                Height="167"
+                Margin="10"
+                VerticalAlignment="Center"
+                MouseDoubleClick="Calendar_MouseDoubleClick" />
+            <Button
+                Width="50"
+                Margin="10"
+                Command="{x:Static local:WindowChoixDate.AnnulerCmd}"
+                Content="Annuler" />
         </StackPanel>
     </Grid>
 </Window>

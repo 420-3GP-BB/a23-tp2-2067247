@@ -44,6 +44,9 @@ namespace BdeBGTD
 
             this.Close();
         }
+        /// <summary>
+        /// Permet de modifier le nom et la description en fermant la fenetre quand on clique sur poursuivre
+        /// </summary>
         private void poursuivre_Click(object sender, RoutedEventArgs e)
         {
             if (titre.Text != "")

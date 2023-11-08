@@ -17,7 +17,7 @@ using GTD;
 using BdeBGTD;
 using System.Collections.ObjectModel;
 
-namespace BdeBGTD 
+namespace BdeBGTD
 {
     /// <summary>
     /// Logique d'interaction pour WindowAjout.xaml
@@ -27,9 +27,9 @@ namespace BdeBGTD
         public WindowAjout()
         {
             InitializeComponent();
-            
+
         }
-       private Boolean checkee= false;
+        private Boolean checkee = false;
         //déclaration d'un gestionnaire patagé entre les fenêtres 
         GestionnaireGTD sharedGestionnaire = (GestionnaireGTD)Application.Current.MainWindow.DataContext;
         // routed commande pour pouvoir fermer la fenetre et ajouter les nouvelles entrees à la liste 
@@ -38,19 +38,20 @@ namespace BdeBGTD
         private void Confirmer_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {   // est seulement possible quand le nom n'est pas vide
             if (!string.IsNullOrEmpty(nomAjout.Text))
-            { 
-            e.CanExecute = true;
-            }else { e.CanExecute = false; }
+            {
+                e.CanExecute = true;
+            }
+            else { e.CanExecute = false; }
         }
-//commande qui s'execure quand on appuie sur confirmer
+        //commande qui s'execure quand on appuie sur confirmer
         private void Confirmer_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            ElementGTD nouvelleentree = new ElementGTD(nomAjout.Text,descriptionAjout.Text,"Entree");
-           sharedGestionnaire.ListeEntrees.Add(nouvelleentree);
+            ElementGTD nouvelleentree = new ElementGTD(nomAjout.Text, descriptionAjout.Text, "Entree");
+            sharedGestionnaire.ListeEntrees.Add(nouvelleentree);
             nomAjout.Text = "";
             descriptionAjout.Text = "";
             // la fenêtre reste ouverte seulement si la case est cochée
-            if(checkee==false)
+            if (checkee == false)
             { this.Close(); }
 
         }
@@ -61,14 +62,14 @@ namespace BdeBGTD
         {
             e.CanExecute = true;
         }
-// si l'utilisateur clicque sur annuler les textbox sont vidées et la fenêtre est fermée
+        // si l'utilisateur clicque sur annuler les textbox sont vidées et la fenêtre est fermée
         private void Annuler_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            nomAjout.Text ="";
+            nomAjout.Text = "";
             descriptionAjout.Text = "";
             this.Close();
         }
-// les deux méthodes changent la valeur du boolean checkée dépendemment de l'état de la checkbox
+        // les deux méthodes changent la valeur du boolean checkée dépendemment de l'état de la checkbox
         private void checkAjout_Checked(object sender, RoutedEventArgs e)
         {
             checkee = true;
@@ -76,7 +77,7 @@ namespace BdeBGTD
 
         private void checkAjout_Unchecked(object sender, RoutedEventArgs e)
         {
-            checkee=false;
+            checkee = false;
         }
     }
 }

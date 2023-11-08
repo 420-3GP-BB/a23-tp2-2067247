@@ -41,11 +41,11 @@ namespace BdeBGTD
             DateString = "";
             this.Close();
         }
-
+        //gère le double click sur une date
         private void Calendar_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
-            if (calendrier.SelectedDate.HasValue)
+            if (calendrier.SelectedDate.HasValue)//validation de la valeur
             {
                 DateTime dateSaisie = calendrier.SelectedDate.Value;
                 DateString = dateSaisie.ToShortDateString();
